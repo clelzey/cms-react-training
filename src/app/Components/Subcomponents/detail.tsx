@@ -1,8 +1,8 @@
 export default function Detail({ tag, info }: detail) {
     return (
-        <div>
+        <p>
             <b>{tag}:</b> {info}
-        </div>
+        </p>
     );
 }
 

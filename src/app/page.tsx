@@ -10,14 +10,17 @@ const inter = Inter({ subsets: ['latin'] })
 export default function Home() {
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <div className={styles.grid}>
+      <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(183px, 1fr))",
+          gap: "60px 26px",
+          width: "100%"
+        }}>
         {comics.map((comic) => {
           return (
             <Comic key={comic.id} {...comic} />
           )
         })}
-        </div>
       </div>
     </main>
   )
