@@ -1,0 +1,13 @@
+.card {
+    max-width: 183px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.imgCont {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
