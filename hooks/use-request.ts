@@ -1,11 +1,26 @@
 import { useState } from "react";
 
-const useRequest = (props) => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [isSuccess, setIsSuccess] = useState(false);
-    const [hasError, setHasError] = useState(false);
+type getMarvelComicsResourceUrlFn = () => string;
 
-    const getMarvelComicsResourceUrl = () => {
+type GenericObject = { [key: string]: any };
+
+type RequestConfig = {
+    endpoint: string,
+    method?: string,
+    headers?: {
+        "Content-Type"?: string,
+    },
+    body?: GenericObject,
+}
+
+type fetchDataFn = (requestConfig: RequestConfig) => Promise<GenericObject>;
+
+const useRequest = () => {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isSuccess, setIsSuccess] = useState<boolean>(false);
+    const [hasError, setHasError] = useState<boolean>(false);
+
+    const getMarvelComicsResourceUrl: getMarvelComicsResourceUrlFn = () => {
         const serviceEndpoint = "https://gateway.marvel.com/v1/public/comics?";
         let timestamp = new Date().getTime();
         const hashInputData = `${timestamp}${process.env.NEXT_PUBLIC_MARVEL_API_KEY_PRIVATE}${process.env.NEXT_PUBLIC_MARVEL_API_KEY_PUBLIC}`;
@@ -18,7 +33,7 @@ const useRequest = (props) => {
         return requestUrl;
     };
 
-    const fetchData = async (requestConfig) => { 
+    const fetchData: fetchDataFn = async (requestConfig) => { 
         try {
             console.log("Fetching Data");
             setIsLoading(true);
@@ -32,7 +47,7 @@ const useRequest = (props) => {
                     : null,
             });
             if (response.status < 200 && response.status > 299) {
-                throw new Error(response.status);
+                throw new Error(response.status.toString());
             }
             const responseData = await response.json();
             console.log("Data Retrieved");

@@ -4,7 +4,9 @@ import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import useRequest from '@/hooks/use-request'
 import Comic from '../components/Comic'
-import comics from '../Data/data.json'
+import { ComicData } from '@/interfaces/shared_interfaces'
+import React from 'react'
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,7 +21,7 @@ export default function Home() {
     hasError,
     setHasError,
   } = useRequest();
-  const [comics, setComics] = useState([]);
+  const [comics, setComics] = useState<ComicData[]>([]);
 
   useEffect(() => {
       fetchData({ endpoint: getMarvelComicsResourceUrl() })
@@ -60,7 +62,7 @@ export default function Home() {
             }}>
             {comics.map((comic) => {
               return (
-                <Comic key={comic.id} {...comic} />
+                <Comic key={comic.id} comicData={comic} />
               )
             })}
           </div>
