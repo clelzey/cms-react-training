@@ -19,7 +19,7 @@ export const Footer = () => {
                 </a>
             </div>
             <div className={`${classes["copyright"]}`}>
-                Copyright 2022. Comic Closet, LLC. All rights reserved.
+                Copyright 2023. Comic Closet, LLC. All rights reserved.
             </div>
         </footer>
     );
