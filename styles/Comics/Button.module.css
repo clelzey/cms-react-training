@@ -1,0 +1,37 @@
+.button {
+    position: absolute;
+    top: 40%;
+    left: -11%;
+    margin: 0 auto;
+    padding: 6px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 0;
+    background-color: var(--color-dark-2);
+    border: 2px solid var(--color-dark-2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+@media screen and (min-width: 481px) {
+    .button {
+        top: unset;
+        bottom: -15px;
+        left: 0;
+        right: 0;
+    }
+}
+
+.button .bolt {
+    color: var(--color-light-1);
+    height: 16px;
+    width: 10px;
+}
+
+.button.button--favorited {
+    border: 2px solid white;
+    background-color: var(--color-pink-2);
+}

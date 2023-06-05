@@ -1,14 +1,10 @@
+import React from 'react'
 import Head from 'next/head'
 import { useState, useEffect } from 'react'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
-import useRequest from '@/hooks/use-request'
-import Comic from '../components/Comic'
-import { ComicData } from '@/interfaces/shared_interfaces'
-import React from 'react'
-
-
-const inter = Inter({ subsets: ['latin'] })
+import Context from '../context/index-store'
+import useRequest from '../hooks/use-request'
+import { ComicData } from '../interfaces/shared_interfaces'
+import { Layout } from '../components/Home/Layout'
 
 export default function Home() {
   const {
@@ -22,11 +18,23 @@ export default function Home() {
     setHasError,
   } = useRequest();
   const [comics, setComics] = useState<ComicData[]>([]);
+  const [favorites, setFavorites] =useState<ComicData[]>([]);
 
   useEffect(() => {
-      fetchData({ endpoint: getMarvelComicsResourceUrl() })
+    const favoriteComics = localStorage.getItem("favorite_comics");
+    if (favoriteComics) {
+      setFavorites(JSON.parse(favoriteComics));
+    }
+  }, []);
+
+  useEffect(() => {
+      fetchData({ 
+        endpoint: getMarvelComicsResourceUrl(
+          "https://gateway.marvel.com/v1/public/comics?"
+        ), 
+      })
           .then((data) => {
-              console.log(data);
+              // console.log(data);
               setComics(data.data.results);
               setIsLoading(false);
               setIsSuccess(true);
@@ -38,6 +46,21 @@ export default function Home() {
           });
   }, []);
 
+  const ctx = {
+    comics,
+    setComics,
+    favorites,
+    setFavorites,
+    isLoading,
+    setIsLoading,
+    isSuccess,
+    setIsSuccess,
+    hasError,
+    setHasError,
+    fetchData,
+    getMarvelComicsResourceUrl
+  };
+
   return (
     <>
       <Head>
@@ -45,29 +68,9 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={`${styles.main} ${inter.className}`}>
-        {isLoading && <h1>Loading comics...</h1>}
-        {hasError && (
-            <p>
-                Something went wrong. Unable to retrieve comics.
-                {hasError}
-            </p>
-        )}
-        {!isLoading && !hasError && isSuccess && (
-          <div style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(183px, 1fr))",
-              gap: "60px 26px",
-              width: "100%"
-            }}>
-            {comics.map((comic) => {
-              return (
-                <Comic key={comic.id} comicData={comic} />
-              )
-            })}
-          </div>
-        )}
-      </main>
+      <Context.Provider value={ctx}>
+        <Layout />
+      </Context.Provider>
     </>
   )
 }

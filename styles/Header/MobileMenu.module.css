@@ -1,0 +1,95 @@
+.menu {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    color: var(--color-light-1);
+    font-size: 18px;
+    font-weight: bold;
+}
+
+@media screen and (min-width: 481px) {
+    .menu {
+        align-items: normal;
+        padding-top: 26px;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .menu {
+        display: none;
+    }
+}
+
+.menu .menu-item {
+    position: relative;
+}
+
+.menu .menu-item:first-of-type {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 38px;
+    height: 22px;
+}
+
+@media screen and (min-width: 481px) {
+    .menu .menu-item:first-of-type {
+        padding-top: 17px;
+    }
+}
+
+.menu .menu-item .bolt {
+    flex-basis: 11px;
+    height: 18px;
+}
+
+.menu .menu-item .bolt svg {
+    width: 100%;
+    height: 100%;
+}
+
+.menu .menu-item .count {
+    opacity: 0.6;
+}
+
+.menu .menu-item:last-of-type {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.menu .menu-item .hamburger-button {
+    width: 55px;
+    height: 43px;
+    padding: 10px 16px;
+    border: 2px solid var(--color-light-1);
+    border-radius: 5px;
+    background: inherit;
+    cursor: pointer;
+}
+
+.menu .menu-item .hamburger-icon {
+    width: 18px;
+    height: 21px;
+    color: white;
+}
+
+.menu .menu-item .hamburger-menu {
+    display: none;
+    position: absolute;
+    top: 43px;
+    right: 0;
+    padding: 20px;
+    background-color: rgba(20, 20, 20, 0.9);
+    border: 2px solid var(--color-light-1);
+    border-radius: 5px;
+    list-style: none;
+}
+
+.menu .menu-item .hamburger-menu.open {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

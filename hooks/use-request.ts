@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-type getMarvelComicsResourceUrlFn = () => string;
+export type getMarvelComicsResourceUrlFn = (endpoint: string) => string;
 
 type GenericObject = { [key: string]: any };
 
@@ -13,15 +13,17 @@ type RequestConfig = {
     body?: GenericObject,
 }
 
-type fetchDataFn = (requestConfig: RequestConfig) => Promise<GenericObject>;
+export type fetchDataFn = (requestConfig: RequestConfig) => Promise<GenericObject>;
 
 const useRequest = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
     const [hasError, setHasError] = useState<boolean>(false);
 
-    const getMarvelComicsResourceUrl: getMarvelComicsResourceUrlFn = () => {
-        const serviceEndpoint = "https://gateway.marvel.com/v1/public/comics?";
+    const getMarvelComicsResourceUrl: getMarvelComicsResourceUrlFn = (
+        endpoint
+    ) => {
+        const serviceEndpoint = endpoint;
         let timestamp = new Date().getTime();
         const hashInputData = `${timestamp}${process.env.NEXT_PUBLIC_MARVEL_API_KEY_PRIVATE}${process.env.NEXT_PUBLIC_MARVEL_API_KEY_PUBLIC}`;
         const crypto = require("crypto");
